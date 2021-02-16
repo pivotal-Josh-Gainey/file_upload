@@ -26,9 +26,21 @@ public class MyController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/upload", consumes = {"multipart/form-data"},produces = "application/json")
-    public ResponseEntity<String> importQuestion(@Valid @RequestParam("file") MultipartFile MultipartFile) {
+    public ResponseEntity<String> importFast(@Valid @RequestParam("file") MultipartFile MultipartFile) {
             System.out.println("success");
         return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
+
+    @RequestMapping(method = RequestMethod.POST, value="/uploadslow", consumes = {"multipart/form-data"},produces = "application/json")
+    public ResponseEntity<String> importSlow(@Valid @RequestParam("fileslow") MultipartFile MultipartFile) {
+        System.out.println("Got request");
+        try{
+            Thread.sleep(60000);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("sending response");
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
 }
